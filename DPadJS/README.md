@@ -10,7 +10,7 @@ Just grab `DPad.js` from this repo.
 ### Usage
 Init the script with your buttons.
 ```js
-DPade.init({"btn1": {
+DPad.init({"btn1": {
     "press": function () {
         //presed
     },
