@@ -4,22 +4,23 @@
     <script src="../DPad.js"></script>
     <script>
         window.onload = function () {
-                Touch.init({
-                    "btn1": {
-                        "press": function () {
-                            document.getElementById("res").textContent = "press";
-                        },
-                        "unpress": function () {
-                            document.getElementById("res").textContent = "unpress";
-                        },
-                        "style": {
-                            "left": "40%",
-                            "top": "40%",
-                            "with": "20%",
-                            "height": "20%"
-                        }
+            Touch.init({
+                "btn1": {
+                    "press": function () {
+                        document.getElementById("res").textContent = "press";
+                    },
+                    "unpress": function () {
+                        document.getElementById("res").textContent = "unpress";
+                    },
+                    "style": {
+                        "left": "40%",
+                        "top": "40%",
+                        "with": "20%",
+                        "height": "20%"
                     }
-                });
+                }
+            });
+        }
     </script>
 </head>
 
