@@ -40,6 +40,9 @@ DPad.init({"btn1": {
 
 ### Todo's
 * ~~Write Demo~~
+* Add Animations
+* Add Texures
+* Add Joystick
 
 License
 ----
