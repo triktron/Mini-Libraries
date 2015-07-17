@@ -31,7 +31,7 @@ Touche.init({"btn1": {
 Initial version.
 
 ### Todo's
-* Write Demo
+* ~~Write Demo~~
 
 License
 ----
