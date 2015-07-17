@@ -4,7 +4,7 @@
     <script src="../DPad.js"></script>
     <script>
         window.onload = function () {
-            Touch.init({
+            DPad.init({
                 "btn1": {
                     "press": function () {
                         document.getElementById("res").textContent = "press";
@@ -16,7 +16,8 @@
                         "left": "40%",
                         "top": "40%",
                         "with": "20%",
-                        "height": "20%"
+                        "height": "20%",
+                        "opacity":"1"
                     },
                     "innerHTML":"<h1>Press Me</h1>"
                 }

@@ -10,7 +10,7 @@ Just grab `DPad.js` from this repo.
 ### Usage
 Init the script with your buttons.
 ```js
-Touche.init({"btn1": {
+DPade.init({"btn1": {
     "press": function () {
         //presed
     },
@@ -19,16 +19,24 @@ Touche.init({"btn1": {
     },
     "style":{
         "left":"50%",
-        "top":"50%"
-    }
+        "top":"50%",
+        "opacity":"1"
+    },
+    "innerHTML":"<h1>Press Me</h1>"
 }});
 ```
 
 ## Change Log
 
+### 0.2.X
+
+* changed object name to `DPad`.
+* added innerHTML options.
+* prevented duplication op pads.
+
 ### 0.1.X
 
-Initial version.
+* Initial version.
 
 ### Todo's
 * ~~Write Demo~~
