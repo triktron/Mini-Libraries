@@ -36,4 +36,4 @@ Initial version.
 License
 ----
 
-MIT
+Apache
