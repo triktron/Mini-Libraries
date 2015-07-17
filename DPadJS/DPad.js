@@ -1,36 +1,36 @@
 /**
-* Just call 'Touche.init(options)' with an options list
-*
-* Otions list exammple
-*
-*
-*   "btn1": {
-*      "press": function () {
-*          //presed
-*      },
-*      "unpress": function () {
-*          //unpresed
-*      },
-*      "style":{
-*          "left":"50%",
-*          "top":"50%"
-*      }
-*   }
-*
-*
-*
-* @method Touch
-* @param {String} 'CONTROLS_CSS_NOFILL'             default css nofill styles.
-* @param {String} 'CONTROLS_CSS'                    default css styles.
-* @param {String} 'DPAD_BUTTON_WIDTH_PERCENT'       default button size.
-* @param {String}  'DPAD_BUTTON_HEIGHT_PERCENT'     default button size.
-* @param {Function} 'init'                          The init script for the script.
-* @param {Function} 'CaptureTouche'                 Captures the toutche events.
-* @param {Function} 'CaptureMouseDownOrMove'        Captures the mouse move and mouse down event.
-* @param {Function} 'CaptureMouseUp'                Captures the mouse up event.
-* @param {Function} 'updateButtonState'             The function that checks if a button is presed.
-* @param {Function} 'createDPadButton'              The script thad adds a button.
-*/
+ * Just call 'Touche.init(options)' with an options list
+ *
+ * Otions list exammple
+ *
+ *
+ *   "btn1": {
+ *      "press": function () {
+ *          //presed
+ *      },
+ *      "unpress": function () {
+ *          //unpresed
+ *      },
+ *      "style":{
+ *          "left":"50%",
+ *          "top":"50%"
+ *      }
+ *   }
+ *
+ *
+ *
+ * @method Touch
+ * @param {String} 'CONTROLS_CSS_NOFILL'             default css nofill styles.
+ * @param {String} 'CONTROLS_CSS'                    default css styles.
+ * @param {String} 'DPAD_BUTTON_WIDTH_PERCENT'       default button size.
+ * @param {String}  'DPAD_BUTTON_HEIGHT_PERCENT'     default button size.
+ * @param {Function} 'init'                          The init script for the script.
+ * @param {Function} 'CaptureTouche'                 Captures the toutche events.
+ * @param {Function} 'CaptureMouseDownOrMove'        Captures the mouse move and mouse down event.
+ * @param {Function} 'CaptureMouseUp'                Captures the mouse up event.
+ * @param {Function} 'updateButtonState'             The function that checks if a button is presed.
+ * @param {Function} 'createDPadButton'              The script thad adds a button.
+ */
 
 Touch = {};
 Touch.CONTROLS_CSS_NOFILL = 'opacity:0.1; z-index: 11000; border-style: dashed; border-width: 1px';
@@ -51,8 +51,9 @@ Touch.init = function (options) {
     for (var key in options) {
         var buttonOpt = options[key];
 
-        Touch.dpad[key] = Touch.createDPadButton(key, buttonOpt.press || function(){}, buttonOpt.unpress || function(){});
+        if (Touch.dpad[key]) console.error("dpad with id:",key,"alredy exists!"); else Touch.dpad[key] = Touch.createDPadButton(key, buttonOpt.press || function () {}, buttonOpt.unpress || function () {});
         for (var type in buttonOpt.style) Touch.dpad[key].style[type] = buttonOpt.style[type];
+        if (buttonOpt.innerHTML) Touch.dpad[key].innerHTML = buttonOpt.innerHTML;
     }
 
 
@@ -71,33 +72,39 @@ Touch.init = function (options) {
     // mouse up.
     document.addEventListener('mouseup', Touch.CaptureMouseUp);
 };
-Touch.CaptureTouche = function(evt) {
-        evt.preventDefault();
-        Touch.updateButtonState(evt.touches);
+Touch.CaptureTouche = function (evt) {
+    evt.preventDefault();
+    Touch.updateButtonState(evt.touches);
 }
-Touch.CaptureMouseDownOrMove = function(evt) {
-    if (evt.buttons != 0) Touch.updateButtonState([evt]); else Touch.updateButtonState([{'clientX':-1,'clientY':-1}]);
+Touch.CaptureMouseDownOrMove = function (evt) {
+    if (evt.buttons != 0) Touch.updateButtonState([evt]);
+    else Touch.updateButtonState([{
+        'clientX': -1,
+        'clientY': -1
+    }]);
 }
-Touch.CaptureMouseUp = function(evt) {
-    Touch.updateButtonState([{'clientX':-1,'clientY':-1}]);
+Touch.CaptureMouseUp = function (evt) {
+    Touch.updateButtonState([{
+        'clientX': -1,
+        'clientY': -1
+    }]);
 }
 Touch.updateButtonState = function (input) {
-        for (var key in Touch.dpad) {
-            var button = Touch.dpad[key];
-            var isPresed = false;
-            for (var i = 0; i < input.length; i++) {
-                var touche = input[i];
-                var element = document.elementFromPoint(touche.clientX, touche.clientY);
-                // this can return null
-                if (element !== null && 'id' in element)
-                    if (element == button) isPresed = true;
-            }
-            if (isPresed && !button.isPresed) button.press();
-            if (!isPresed & button.isPresed) button.unpress();
-            button.isPresed = isPresed;
+    for (var key in Touch.dpad) {
+        var button = Touch.dpad[key];
+        var isPresed = false;
+        for (var i = 0; i < input.length; i++) {
+            var touche = input[i];
+            var element = document.elementFromPoint(touche.clientX, touche.clientY);
+            // this can return null
+            if (element !== null && 'id' in element)
+                if (element == button) isPresed = true;
         }
+        if (isPresed && !button.isPresed) button.press();
+        if (!isPresed & button.isPresed) button.unpress();
+        button.isPresed = isPresed;
     }
-    // DPad buttons are divs with explicit press/unpress functions.
+}
 Touch.createDPadButton = function (id, pressFunction, unpressFunction, cssOverride) {
     var button = document.createElement('div');
     button.id = id;
