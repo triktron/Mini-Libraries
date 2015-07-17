@@ -1,5 +1,9 @@
 #DPad controler
 
+### Demo
+
+view:[RawGit](https://rawgit.com/triktron/Mini-Libraries/master/DPadJS/demo/index.html).
+
 ### Installation
 Just grab `github.js` from this repo.
 
